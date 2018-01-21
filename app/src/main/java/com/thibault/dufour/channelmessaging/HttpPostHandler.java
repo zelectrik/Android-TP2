@@ -49,8 +49,18 @@ public class HttpPostHandler extends AsyncTask<String, String, String> {
         for (OnDownloadListener oneListener : list_listener)
         {
             Gson gson = new Gson();
-            Object test = gson.fromJson(result,Object.class);
-            oneListener.onDownloadComplete(test.toString());
+            Response temp = gson.fromJson(result,Response.class);
+            if(temp.getCode().equals("500"))
+            {
+                oneListener.onDownloadError(temp.getResponse());
+
+            }
+            else if(temp.getCode().equals("200"))
+            {
+                oneListener.onDownloadComplete(temp.getAccesstoken());
+
+            }
+
         }
     }
 

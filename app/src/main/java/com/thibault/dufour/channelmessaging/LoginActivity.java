@@ -1,5 +1,6 @@
 package com.thibault.dufour.channelmessaging;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,11 +9,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity implements
-        View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView txt_id,txt_mdp;
     private EditText etxt_id, etxt_mdp;
     private Button btn_valider;
+    public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +38,23 @@ public class LoginActivity extends AppCompatActivity implements
         connection.addOnDownloadListener(new OnDownloadListener() {
             @Override
             public void onDownloadComplete(String downloadedContent) {
-                Toast.makeText(getApplicationContext(),downloadedContent,Toast.LENGTH_SHORT).show();
+
+                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("accesstoken", downloadedContent);
+                // Commit the edits!
+                editor.commit();
+
+                // Restore preferences
+                String temp = settings.getString("accesstoken", "");
+
+                Toast.makeText(getApplicationContext(),temp,Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onDownloadError(String error) {
-
+                Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
             }
         });
     }
