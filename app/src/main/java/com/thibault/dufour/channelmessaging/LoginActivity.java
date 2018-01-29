@@ -1,5 +1,6 @@
 package com.thibault.dufour.channelmessaging;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.thibault.dufour.channelmessaging.model.Response;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView txt_id,txt_mdp;
@@ -33,22 +39,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        HttpPostHandler connection = (HttpPostHandler) new HttpPostHandler().execute(etxt_id.getText().toString(),etxt_mdp.getText().toString());
+        HashMap<String,String> temp = new HashMap<String,String>();
+        temp.put("username",etxt_id.getText().toString());
+        temp.put("password",etxt_mdp.getText().toString());
+        HttpPostHandler connection = (HttpPostHandler) new HttpPostHandler().execute( new PostRequest("?function=connect",temp));
 
         connection.addOnDownloadListener(new OnDownloadListener() {
             @Override
             public void onDownloadComplete(String downloadedContent) {
 
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString("accesstoken", downloadedContent);
-                // Commit the edits!
-                editor.commit();
+                Gson gson =  new Gson();
+                Response reponse = gson.fromJson(downloadedContent,Response.class);
 
-                // Restore preferences
-                String temp = settings.getString("accesstoken", "");
+                if(reponse.getCode().equals("200"))
+                {
+                    SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("accesstoken", reponse.getAccesstoken());
+                    // Commit the edits!
+                    editor.commit();
 
-                Toast.makeText(getApplicationContext(),temp,Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent( getApplicationContext(), ChannelListActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    onDownloadError(reponse.getResponse());
+                }
+
 
             }
 

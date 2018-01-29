@@ -1,13 +1,9 @@
 package com.thibault.dufour.channelmessaging;
 
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.thibault.dufour.channelmessaging.model.Response;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,7 +23,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * Created by dufourth on 19/01/2018.
  */
-public class HttpPostHandler extends AsyncTask<String, String, String> {
+public class HttpPostHandler extends AsyncTask<PostRequest, String, String> {
 
     private ArrayList<OnDownloadListener> list_listener = new ArrayList<OnDownloadListener>();
 
@@ -36,11 +32,8 @@ public class HttpPostHandler extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected String doInBackground(String... params) {
-        HashMap param = new HashMap();
-        param.put("username",params[0]);
-        param.put("password",params[1]);
-        String retour = performPostCall("http://raphaelbischof.fr/messaging/?function=connect",param);
+    protected String doInBackground(PostRequest... params) {
+        String retour = performPostCall("http://raphaelbischof.fr/messaging/"+params[0].getURL(),params[0].getParams());
         return retour;
     }
 
@@ -48,19 +41,7 @@ public class HttpPostHandler extends AsyncTask<String, String, String> {
     protected void onPostExecute(String result) {
         for (OnDownloadListener oneListener : list_listener)
         {
-            Gson gson = new Gson();
-            Response temp = gson.fromJson(result,Response.class);
-            if(temp.getCode().equals("500"))
-            {
-                oneListener.onDownloadError(temp.getResponse());
-
-            }
-            else if(temp.getCode().equals("200"))
-            {
-                oneListener.onDownloadComplete(temp.getAccesstoken());
-
-            }
-
+            oneListener.onDownloadComplete(result);
         }
     }
 

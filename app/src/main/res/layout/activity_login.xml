@@ -36,7 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText_identifiant"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="tdufo" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,7 +58,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText_mdp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="thibaultdufour" />
         </LinearLayout>
 
         <Button
