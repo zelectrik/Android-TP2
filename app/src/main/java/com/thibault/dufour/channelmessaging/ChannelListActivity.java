@@ -36,6 +36,9 @@ public class ChannelListActivity extends AppCompatActivity implements OnDownload
 
         HashMap<String,String> temp = new HashMap<String,String>();
         temp.put("accesstoken",accestoken);
+
+
+
         HttpPostHandler connection = (HttpPostHandler) new HttpPostHandler().execute( new PostRequest("?function=getchannels",temp));
 
         connection.addOnDownloadListener(this);
@@ -64,8 +67,10 @@ public class ChannelListActivity extends AppCompatActivity implements OnDownload
         // Restore preferences
         SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("ChanelId", item.getChannelId());
 
+        editor.putString("ChanelId", item.getChannelId());
+
+        editor.commit();
         Intent intent = new Intent( getApplicationContext(), ChannelActivity.class);
         startActivity(intent);
     }

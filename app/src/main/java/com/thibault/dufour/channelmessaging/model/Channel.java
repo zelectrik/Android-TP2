@@ -7,9 +7,9 @@ import java.util.HashMap;
  */
 public class Channel {
 
-    private String channelId;
+    private String channelID;
     private String name;
-    private int connectedUsers;
+    private int connectedusers;
 
     public Channel(String _channelId, String _name, int _connectedUsers)
     {
@@ -19,19 +19,19 @@ public class Channel {
     }
 
     public int getConnectedUsers() {
-        return connectedUsers;
+        return connectedusers;
     }
 
     public void setConnectedUsers(int connectedUsers) {
-        this.connectedUsers = connectedUsers;
+        this.connectedusers = connectedUsers;
     }
 
     public String getChannelId() {
-        return channelId;
+        return channelID;
     }
 
     public void setChannelId(String channelId) {
-        this.channelId = channelId;
+        this.channelID = channelId;
     }
 
     public String getName() {
@@ -45,6 +45,6 @@ public class Channel {
     @Override
     public String toString() {
         return name + '\n' +
-                "Nombre d'utilisateurs connectés : " + connectedUsers;
+                "Nombre d'utilisateurs connectés : " + connectedusers;
     }
 }
