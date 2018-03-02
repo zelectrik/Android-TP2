@@ -7,15 +7,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:id="@+id/UserImage"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/UserText"
+            android:textColor="@android:color/black"
+            android:text="hh"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textColor="@android:color/black" />
+            android:layout_toRightOf="@+id/UserImage"
+            android:layout_toEndOf="@+id/UserImage" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,16 +34,18 @@
             android:layout_alignBottom="@+id/UserText"
             android:layout_toRightOf="@+id/UserText"
             android:layout_toEndOf="@+id/UserText"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:text="tt" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/dateText"
+            android:textColor="@android:color/black"
+            android:text="tt"
             android:layout_below="@+id/UserText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textColor="@android:color/black" />
+            android:layout_toRightOf="@+id/UserImage"
+            android:layout_toEndOf="@+id/UserImage" />
     </RelativeLayout>
 </LinearLayout>

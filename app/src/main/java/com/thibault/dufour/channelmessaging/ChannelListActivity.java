@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.thibault.dufour.channelmessaging.Fragment.ChannelListFragment;
 import com.thibault.dufour.channelmessaging.model.Channel;
 import com.thibault.dufour.channelmessaging.model.ChannelList;
 
@@ -19,19 +20,18 @@ import java.util.HashMap;
  * Created by tdufo on 21/01/2018.
  */
 
-public class ChannelListActivity extends AppCompatActivity implements OnDownloadListener, AdapterView.OnItemClickListener {
+public class ChannelListActivity extends AppCompatActivity/*implements OnDownloadListener, AdapterView.OnItemClickListener */{
 
-    private ListView listView_listeChannel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channellist);
 
-        listView_listeChannel = (ListView) findViewById(R.id.listView_channel);
 
         // Restore preferences
-        SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+        /*SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
         String accestoken = settings.getString("accesstoken", "");
 
         HashMap<String,String> temp = new HashMap<String,String>();
@@ -41,10 +41,15 @@ public class ChannelListActivity extends AppCompatActivity implements OnDownload
 
         HttpPostHandler connection = (HttpPostHandler) new HttpPostHandler().execute( new PostRequest("?function=getchannels",temp));
 
-        connection.addOnDownloadListener(this);
+        connection.addOnDownloadListener(this);*/
     }
 
-    @Override
+
+
+
+
+
+    /*@Override
     public void onDownloadComplete(String downloadedContent) {
         Gson gson =  new Gson();
         ChannelList listeChannels = gson.fromJson(downloadedContent, ChannelList.class);
@@ -73,5 +78,5 @@ public class ChannelListActivity extends AppCompatActivity implements OnDownload
         editor.commit();
         Intent intent = new Intent( getApplicationContext(), ChannelActivity.class);
         startActivity(intent);
-    }
+    }*/
 }

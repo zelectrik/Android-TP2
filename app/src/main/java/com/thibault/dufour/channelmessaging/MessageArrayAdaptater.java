@@ -1,15 +1,19 @@
 package com.thibault.dufour.channelmessaging;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.thibault.dufour.channelmessaging.model.Channel;
 import com.thibault.dufour.channelmessaging.model.Message;
 
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -29,6 +33,9 @@ public class MessageArrayAdaptater  extends ArrayAdapter<Message> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.rowmessagelayout, parent, false);
+        new HttpImageLoad((ImageView) rowView.findViewById((R.id.UserImage)))
+                .execute(values.get(position).getImageUrl());
+
         TextView UserName =  (TextView) rowView.findViewById(R.id.UserText);
         UserName.setText((CharSequence) values.get(position).getUsername() + " : ");
         TextView MessageText =  (TextView) rowView.findViewById(R.id.MessageText);
