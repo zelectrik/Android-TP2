@@ -5,7 +5,7 @@
     android:weightSum="1">
             <ListView
                 android:layout_width="wrap_content"
-                android:layout_height="460dp"
+                android:layout_height="200dp"
                 android:id="@+id/listView_message" />
 
     <Button
@@ -16,7 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/listView_message" />
+        android:layout_alignTop="@+id/editText_message" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -26,8 +26,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/button_envoyer"
-        android:layout_toStartOf="@+id/button_envoyer"
-        android:layout_below="@+id/listView_message" />
+        android:layout_toStartOf="@+id/button_envoyer" />
 
 
 </RelativeLayout>

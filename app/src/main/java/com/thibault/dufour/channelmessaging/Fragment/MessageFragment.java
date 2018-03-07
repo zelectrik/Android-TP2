@@ -105,7 +105,7 @@ public class MessageFragment extends Fragment implements OnDownloadListener,View
 
 
 
-    private void DisplayMessage()
+    public void DisplayMessage()
     {
         // Restore preferences
         SharedPreferences settings = getContext().getSharedPreferences(LoginActivity.PREFS_NAME, 0);
@@ -122,6 +122,10 @@ public class MessageFragment extends Fragment implements OnDownloadListener,View
 
     @Override
     public void onDownloadComplete(String downloadedContent) {
+        SharedPreferences settings = getContext().getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+
+        Toast.makeText(getContext().getApplicationContext(), settings.getString("ChanelId",""), Toast.LENGTH_SHORT).show();
+
         Gson gson = new Gson();
         MessageList listeMessage = gson.fromJson(downloadedContent, MessageList.class);
         listView_messages.setAdapter(new MessageArrayAdaptater(getContext().getApplicationContext(), listeMessage.getMessages()));

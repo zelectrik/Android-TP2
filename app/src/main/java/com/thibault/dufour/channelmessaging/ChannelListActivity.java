@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.thibault.dufour.channelmessaging.Fragment.ChannelListFragment;
+import com.thibault.dufour.channelmessaging.Fragment.MessageFragment;
 import com.thibault.dufour.channelmessaging.model.Channel;
 import com.thibault.dufour.channelmessaging.model.ChannelList;
 
@@ -20,7 +21,7 @@ import java.util.HashMap;
  * Created by tdufo on 21/01/2018.
  */
 
-public class ChannelListActivity extends AppCompatActivity/*implements OnDownloadListener, AdapterView.OnItemClickListener */{
+public class ChannelListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
 
@@ -42,6 +43,32 @@ public class ChannelListActivity extends AppCompatActivity/*implements OnDownloa
         HttpPostHandler connection = (HttpPostHandler) new HttpPostHandler().execute( new PostRequest("?function=getchannels",temp));
 
         connection.addOnDownloadListener(this);*/
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Channel item = (Channel) parent.getItemAtPosition(position);
+
+
+        // Restore preferences
+        SharedPreferences settings = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+
+        editor.putString("ChanelId", item.getChannelId());
+
+        editor.commit();
+
+
+        ChannelListFragment fragChannelList = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.fragChannelList);
+        MessageFragment fragMessage = (MessageFragment)getSupportFragmentManager().findFragmentById(R.id.fragChannel);
+        if(fragMessage == null|| !fragMessage.isInLayout()){
+            Intent intent = new Intent(getApplicationContext(), ChannelActivity.class);
+            startActivity(intent);
+        } else {
+            fragMessage.DisplayMessage();
+        }
+
     }
 
 

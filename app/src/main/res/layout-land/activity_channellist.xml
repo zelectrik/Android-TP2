@@ -13,14 +13,14 @@
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:name="com.thibault.dufour.channelmessaging.Fragment.ChannelListFragment"
-            android:id="@+id/fragment"
+            android:id="@+id/fragChannelList"
             android:layout_gravity="center_horizontal" />
 
         <fragment
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:name="com.thibault.dufour.channelmessaging.Fragment.MessageFragment"
-            android:id="@+id/fragment3"
+            android:id="@+id/fragChannel"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
 

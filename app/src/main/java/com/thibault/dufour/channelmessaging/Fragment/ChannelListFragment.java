@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.thibault.dufour.channelmessaging.ChannelActivity;
 import com.thibault.dufour.channelmessaging.ChannelArrayAdapter;
+import com.thibault.dufour.channelmessaging.ChannelListActivity;
 import com.thibault.dufour.channelmessaging.HttpPostHandler;
 import com.thibault.dufour.channelmessaging.LoginActivity;
 import com.thibault.dufour.channelmessaging.OnDownloadListener;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 /**
  * Created by dufourth on 26/02/2018.
  */
-public class ChannelListFragment extends Fragment implements OnDownloadListener, AdapterView.OnItemClickListener {
+public class ChannelListFragment extends Fragment implements OnDownloadListener {
 
     private ListView listView_listeChannel;
 
@@ -66,7 +67,7 @@ public class ChannelListFragment extends Fragment implements OnDownloadListener,
         ChannelList listeChannels = gson.fromJson(downloadedContent, ChannelList.class);
         Toast.makeText(this.getContext().getApplicationContext(), downloadedContent, Toast.LENGTH_SHORT).show();
         listView_listeChannel.setAdapter(new ChannelArrayAdapter(this.getContext().getApplicationContext(), listeChannels.getListeChannel()));
-        listView_listeChannel.setOnItemClickListener(this);
+        listView_listeChannel.setOnItemClickListener((ChannelListActivity)getActivity());
     }
 
     @Override
@@ -74,27 +75,6 @@ public class ChannelListFragment extends Fragment implements OnDownloadListener,
 
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        Channel item = (Channel) parent.getItemAtPosition(position);
 
 
-        // Restore preferences
-        SharedPreferences settings = getContext().getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-
-        editor.putString("ChanelId", item.getChannelId());
-
-        editor.commit();
-
-        ChannelListFragment fragChannelList = (ChannelListFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment2);
-        if(fragChannelList == null|| !fragChannelList.isInLayout()){
-            Intent intent = new Intent(getContext().getApplicationContext(), ChannelActivity.class);
-            startActivity(intent);
-        } else {
-            fragChannelList = new ChannelListFragment();
-        }
-
-    }
 }
